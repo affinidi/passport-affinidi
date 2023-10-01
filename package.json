@@ -1,6 +1,6 @@
 {
   "name": "@affinidi/passport-affinidi",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Affinidi (OAuth 2.0) authentication provider using passport and open-connect",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
