@@ -14,7 +14,7 @@ export default async function AffinidiStrategy(options: ProviderOptionsType) {
 
   //discover the wellknown for issuer
   const affinidi = await Issuer.discover(options.issuer)
-  console.log('Discovered issuer %s %O', affinidi.issuer, affinidi.metadata)
+  //console.log('Discovered issuer %s %O', affinidi.issuer, affinidi.metadata)
   const sessionKey = `oidc:${options.id || 'affinidi'}-session-key`
 
   var client = new affinidi.Client({
