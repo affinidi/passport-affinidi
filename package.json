@@ -1,8 +1,12 @@
 {
   "name": "passport-affinidi",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Affinidi (OAuth 2.0) authentication provider using passport and open-connect",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
     "lint": "eslint . --ext .ts",
@@ -50,6 +54,6 @@
     "node": ">= 0.4.0"
   },
   "directories": {
-    "lib": "lib"
+    "lib": "dist"
   }
 }
