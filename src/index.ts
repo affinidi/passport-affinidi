@@ -1,9 +1,9 @@
-import passport from 'passport'
 import expressSesssion, { SessionOptions } from 'express-session'
-
-import AffinidiStrategy from './strategy'
-import { profileParser } from './profile'
 import { generators } from 'openid-client'
+import passport from 'passport'
+
+import { profileParser } from './profile'
+import AffinidiStrategy from './strategy'
 
 export type ProviderOptionsType = {
   id: string
@@ -68,7 +68,7 @@ export const affinidiProvider = async (app: any, options: ProviderOptionsType) =
       code_verifier,
     }
 
-    let authorizationUrl = client.authorizationUrl(params)
+    const authorizationUrl = client.authorizationUrl(params)
     res.send({ authorizationUrl })
   }
 
@@ -76,7 +76,7 @@ export const affinidiProvider = async (app: any, options: ProviderOptionsType) =
     passport.authenticate('affinidi-oidc', {}, function (err: any, user: any, info: any) {
       if (err) {
         if (options.onError && typeof options.onError === 'function') {
-          options.onError(err)
+          options.onError(err, info)
         }
         res.status(400).send({
           error: err.message,
@@ -85,7 +85,7 @@ export const affinidiProvider = async (app: any, options: ProviderOptionsType) =
       } else {
         const profile = profileParser(user)
         if (options.onSuccess && typeof options.onSuccess === 'function') {
-          options.onSuccess(user, profile)
+          options.onSuccess(user, profile, info)
         }
         res.send({ user: profile })
       }

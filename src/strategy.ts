@@ -17,7 +17,7 @@ export default async function AffinidiStrategy(options: ProviderOptionsType) {
   //console.log('Discovered issuer %s %O', affinidi.issuer, affinidi.metadata)
   const sessionKey = `oidc:${options.id || 'affinidi'}-session-key`
 
-  var client = new affinidi.Client({
+  const client = new affinidi.Client({
     client_id: options.client_id,
     client_secret: options.client_secret,
     redirect_uris: options.redirect_uris,
