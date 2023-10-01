@@ -1,7 +1,7 @@
 import { UserinfoResponse } from 'openid-client'
 
 export function profileParser(user: UserinfoResponse) {
-  const custom = user['custom'] as any[]
+  const custom = user.custom as any[]
 
   const email = custom?.find((i) => typeof i.email === 'string')?.email
   const givenName = custom?.find((i) => typeof i.givenName === 'string')?.givenName || ''

@@ -1,6 +1,6 @@
-# passport-affinidi
+# @affinidi/passport-affinidi
 
-passport-affinidi is a powerful module for authenticating users with `Affinidi Login` using the OAuth 2.0 Code Grant flow. This strategy seamlessly integrates `Affinidi Login` into your Node.js applications. By leveraging Passport, you can effortlessly incorporate Affinidi authentication into any application or framework that supports Connect-style middleware, including Express.
+@affinidi/passport-affinidi is a powerful module for authenticating users with `Affinidi Login` using the OAuth 2.0 Code Grant flow. This strategy seamlessly integrates `Affinidi Login` into your Node.js applications. By leveraging Passport, you can effortlessly incorporate Affinidi authentication into any application or framework that supports Connect-style middleware, including Express.
 
 This provider simplifies the process by creating an Affinidi OpenID client and registering two essential routes:
 
@@ -10,16 +10,16 @@ This provider simplifies the process by creating an Affinidi OpenID client and r
 ## Installation
 
 ```
-npm install passport-affinidi
+npm install @affinidi/passport-affinidi
 ```
 
 ## Usage
-Here's how to use `passport-affinidi` in your Node.js application:
+Here's how to use `@affinidi/passport-affinidi` in your Node.js application:
 
 1. Import the affinidi provider
 
 ```
-import { affinidiProvider } from 'passport-affinidi'
+import { affinidiProvider } from '@affinidi/passport-affinidi'
 ```
 
 2. Initialize the provider by passing your express server instance and configuration options, including the Affinidi's issuer, client ID, secret, and redirect URIs.
@@ -34,13 +34,13 @@ import { affinidiProvider } from 'passport-affinidi'
     });
 ```
 
-## Example: Express Server with passport-affinidi
+## Example: Express Server with @affinidi/passport-affinidi
 
 ```
 var express = require('express');
 require('dotenv').config()
 
-import { affinidiProvider } from 'passport-affinidi'
+import { affinidiProvider } from '@affinidi/passport-affinidi'
 
 var app = express();
 app.use(express.json());
@@ -90,7 +90,7 @@ initializeServer();
 ```
 
 ## Create a React Frontend App
-To build a frontend that interacts with this server, you can follow the instructions provided in the [affinidi-react-auth](https://www.npmjs.com/package/affinidi-react-auth) package.
+To build a frontend that interacts with this server, you can follow the instructions provided in the [@affinidi/affinidi-react-auth](https://www.npmjs.com/package/@affinidi/affinidi-react-auth) package.
 
 ## Sample API Calls from a Frontend
 Here's how to initiate and complete the Affinidi Code Grant flow from your frontend:
