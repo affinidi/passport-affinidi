@@ -1,5 +1,5 @@
 {
-  "name": "passport-affinidi",
+  "name": "@affinidi/passport-affinidi",
   "version": "0.0.8",
   "description": "Affinidi (OAuth 2.0) authentication provider using passport and open-connect",
   "main": "dist/index.js",
@@ -25,7 +25,7 @@
   "author": "Paramesh Kamarthi <paramesh.k@affinidi.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kamarthiparamesh/passport-affinidi.git"
+    "url": "git+https://github.com/affinidi/passport-affinidi.git"
   },
   "license": "MIT",
   "dependencies": {
