@@ -1,7 +1,4 @@
 {
-  "release": {
-    "branches": ["main", "next"]
-  },
   "name": "@affinidi/passport-affinidi",
   "version": "0.0.10",
   "description": "Affinidi (OAuth 2.0) authentication provider using passport and open-connect",
@@ -15,7 +12,8 @@
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix"
+    "lint:fix": "eslint . --ext .ts --fix",
+    "semantic-release": "semantic-release"
   },
   "keywords": [
     "passport",
@@ -51,6 +49,10 @@
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-mocha": "^10.1.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/gitlab": "^12.0.2",
+    "semantic-release": "^20.1.3",
     "make-node": "0.4.6",
     "prettier": "^3.0.3",
     "shx": "^0.3.4",
