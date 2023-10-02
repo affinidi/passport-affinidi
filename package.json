@@ -1,7 +1,4 @@
 {
-  "release": {
-    "branches": ["main", "next"]
-  },
   "name": "@affinidi/passport-affinidi",
   "version": "0.0.10",
   "description": "Affinidi (OAuth 2.0) authentication provider using passport and open-connect",
@@ -41,6 +38,9 @@
     "passport": "^0.6.0"
   },
   "devDependencies": {
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/gitlab": "^12.0.2",
     "@types/express-session": "^1.17.8",
     "@types/passport": "^1.0.13",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
@@ -53,6 +53,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "make-node": "0.4.6",
     "prettier": "^3.0.3",
+    "semantic-release": "^21.1.2",
     "shx": "^0.3.4",
     "ts-node": "^10.9.1",
     "tslib": "^2.5.3",
