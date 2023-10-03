@@ -35,7 +35,8 @@
   "dependencies": {
     "express-session": "^1.17.3",
     "openid-client": "^5.5.0",
-    "passport": "^0.6.0"
+    "passport": "^0.6.0",
+    "tslib": "^2.5.3"
   },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "^11.0.0",
@@ -59,7 +60,6 @@
     "semantic-release": "^21.1.2",
     "shx": "^0.3.4",
     "ts-node": "^10.9.1",
-    "tslib": "^2.5.3",
     "typescript": "^5.2.2"
   },
   "engines": {
