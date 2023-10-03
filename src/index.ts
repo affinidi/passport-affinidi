@@ -12,6 +12,7 @@ export type ProviderOptionsType = {
   client_secret: string
   redirect_uris: string[]
   verifyCallback?: any
+  profileParser?: Function
   expressSesssion?: SessionOptions
   onSuccess?: Function
   onError?: Function
@@ -83,7 +84,7 @@ export const affinidiProvider = async (app: any, options: ProviderOptionsType) =
           error_description: err.error_description,
         })
       } else {
-        const profile = profileParser(user)
+        const profile = (options.profileParser && options.profileParser(user)) || profileParser(user)
         if (options.onSuccess && typeof options.onSuccess === 'function') {
           options.onSuccess(user, profile, info)
         }
