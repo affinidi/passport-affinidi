@@ -33,8 +33,7 @@ export type ProviderOptionsType = {
 export const affinidiPassport = passport
 
 export const affinidiProvider = async (app: any, options: ProviderOptionsType) => {
-  const { client, strategy, sessionKey } = await AffinidiStrategy(options)
-
+  //setting default
   options = {
     verifyCallback: (req: any, tokenSet: TokenSet, userinfo: unknown, done: Function) => {
       return done(null, tokenSet.claims())
@@ -46,6 +45,7 @@ export const affinidiProvider = async (app: any, options: ProviderOptionsType) =
     },
     ...options,
   }
+  const { client, strategy, sessionKey } = await AffinidiStrategy(options)
 
   passport.use(options.id, strategy)
 
