@@ -25,13 +25,16 @@ export default async function AffinidiStrategy(options: ProviderOptionsType) {
     token_endpoint_auth_method: 'client_secret_post',
   })
 
-  const defaultVerifyCallback = (tokenSet: TokenSet, userinfo: unknown, done: Function) => {
+  const defaultVerifyCallback = (req: any, tokenSet: TokenSet, userinfo: unknown, done: Function) => {
     return done(null, tokenSet.claims())
   }
 
   return {
     client,
     sessionKey,
-    strategy: new Strategy({ client, sessionKey }, options.verifyCallback || defaultVerifyCallback),
+    strategy: new Strategy(
+      { client, sessionKey, passReqToCallback: true },
+      options.verifyCallback || defaultVerifyCallback,
+    ),
   }
 }
