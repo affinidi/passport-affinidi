@@ -1,5 +1,5 @@
 import expressSesssion, { SessionOptions } from 'express-session'
-import { generators } from 'openid-client'
+import { TokenSet, generators } from 'openid-client'
 import passport from 'passport'
 
 import { profileParser } from './profile'
@@ -12,10 +12,16 @@ export type ProviderOptionsType = {
   client_secret: string
   redirect_uris: string[]
   verifyCallback?: any
-  profileParser?: Function
   expressSesssion?: SessionOptions
   onSuccess?: Function
   onError?: Function
+  noSPARoutes?: Boolean
+  passport?: {
+    initializeSession?: Boolean
+    serializeUser?: any
+    deserializeUser?: any
+  }
+  profileParser?: Function
   routes?: {
     init?: string
     initHandler?: Function
@@ -24,35 +30,59 @@ export type ProviderOptionsType = {
   }
 }
 
+export const affinidiPassport = passport
+
 export const affinidiProvider = async (app: any, options: ProviderOptionsType) => {
+  //setting default
+  options = {
+    verifyCallback: (req: any, tokenSet: TokenSet, userinfo: unknown, done: Function) => {
+      return done(null, tokenSet.claims())
+    },
+    profileParser,
+    noSPARoutes: false,
+    passport: {
+      initializeSession: false,
+    },
+    ...options,
+  }
   const { client, strategy, sessionKey } = await AffinidiStrategy(options)
 
-  passport.use('affinidi-oidc', strategy)
-
-  // app.use(passport.initialize());
-  // app.use(passport.session());
+  passport.use(options.id, strategy)
 
   app.use(
-    expressSesssion({
-      secret: options.id,
-      resave: false,
-      saveUninitialized: true,
-      cookie: {
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 1000 * 60 * 60 * 24 * 1, // 1 day
+    expressSesssion(
+      options.expressSesssion || {
+        secret: options.id,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+          secure: process.env.NODE_ENV === 'production',
+          maxAge: 1000 * 60 * 60 * 24 * 1, // 1 day
+        },
+        unset: 'destroy',
       },
-      unset: 'destroy',
-      ...options.expressSesssion,
-    }),
+    ),
   )
 
-  // handles serialization and deserialization of authenticated user
-  // passport.serializeUser(function (user, done) {
-  //     done(null, user);
-  // });
-  // passport.deserializeUser(function (user, done) {
-  //     done(null, user);
-  // });
+  if (options.passport?.initializeSession === true) {
+    app.use(passport.initialize())
+    app.use(passport.session())
+
+    //handles serialization and deserialization of authenticated user
+    passport.serializeUser(
+      options.passport?.serializeUser ||
+        function (user: any, done) {
+          done(null, user)
+        },
+    )
+
+    passport.deserializeUser(
+      options.passport?.deserializeUser ||
+        function (user: any, done) {
+          done(null, user)
+        },
+    )
+  }
 
   const initHandler = (req: any, res: any, next: any) => {
     const code_verifier = generators.codeVerifier()
@@ -74,7 +104,7 @@ export const affinidiProvider = async (app: any, options: ProviderOptionsType) =
   }
 
   const completeHandler = (req: any, res: any, next: any) => {
-    passport.authenticate('affinidi-oidc', {}, function (err: any, user: any, info: any) {
+    passport.authenticate(options.id, {}, function (err: any, user: any, info: any) {
       if (err) {
         if (options.onError && typeof options.onError === 'function') {
           options.onError(err, info)
@@ -93,10 +123,12 @@ export const affinidiProvider = async (app: any, options: ProviderOptionsType) =
     })(req, res, next)
   }
 
-  app.get(options.routes?.init || '/api/affinidi-auth/init', options.routes?.initHandler || initHandler)
+  if (options.noSPARoutes !== true) {
+    app.get(options.routes?.init || '/api/affinidi-auth/init', options.routes?.initHandler || initHandler)
 
-  app.post(
-    options.routes?.complete || '/api/affinidi-auth/complete',
-    options.routes?.completeHandler || completeHandler,
-  )
+    app.post(
+      options.routes?.complete || '/api/affinidi-auth/complete',
+      options.routes?.completeHandler || completeHandler,
+    )
+  }
 }
