@@ -1,6 +1,6 @@
 {
   "name": "@affinidi/passport-affinidi",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Affinidi OIDC Provider using passport and open-connect",
   "author": "affinidi.com",
   "license": "MIT",
