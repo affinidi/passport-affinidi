@@ -10,7 +10,7 @@ A paradigm shift in the registration and sign-in process, Affinidi Login is a ga
 
 # @affinidi/passport-affinidi
 
-@affinidi/passport-affinidi is a powerful module for authenticating users with `Affinidi Login` using the OAuth 2.0 Code Grant flow. This strategy seamlessly integrates `Affinidi Login` into your Node.js applications. By leveraging Passport, you can effortlessly incorporate Affinidi authentication into any application or framework that supports Connect-style middleware, including Express.
+@affinidi/passport-affinidi is a powerful module for authenticating users with `Affinidi Login` using the OIDC Code Grant flow. This strategy seamlessly integrates `Affinidi Login` into your Node.js applications. By leveraging Passport, you can effortlessly incorporate Affinidi authentication into any application or framework that supports Connect-style middleware, including Express.
 
 This provider simplifies the process by creating an Affinidi OpenID client and registering two essential routes:
 
