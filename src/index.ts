@@ -50,18 +50,18 @@ export const affinidiProvider = async (app: any, options: ProviderOptionsType) =
   passport.use(options.id, strategy)
 
   app.use(
-    expressSesssion(
-      options.expressSesssion || {
-        secret: options.id,
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-          secure: process.env.NODE_ENV === 'production',
-          maxAge: 1000 * 60 * 60 * 24 * 1, // 1 day
-        },
-        unset: 'destroy',
+    expressSesssion({
+      secret: options.id,
+      resave: false,
+      saveUninitialized: true,
+      cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'none',
+        maxAge: 1000 * 60 * 60 * 24 * 1, // 1 day
       },
-    ),
+      unset: 'destroy',
+      ...options.expressSesssion,
+    }),
   )
 
   if (options.passport?.initializeSession === true) {
