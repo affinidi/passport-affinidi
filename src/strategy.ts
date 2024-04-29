@@ -8,9 +8,9 @@ export default async function AffinidiStrategy(options: ProviderOptionsType) {
   if (typeof options.client_id !== 'string' || !options.client_id) {
     throw new TypeError('affinidi client_id is required')
   }
-  if (typeof options.client_secret !== 'string' || !options.client_secret) {
-    throw new TypeError('affinidi client_secret is required')
-  }
+  if (options.pkce != true && (typeof options.client_secret !== 'string' || !options.client_secret)) {
+    throw new TypeError('affinidi client_secret is required when its not PKCE flow')
+}
 
   //discover the wellknown for issuer
   const affinidi = await Issuer.discover(options.issuer)
@@ -19,10 +19,10 @@ export default async function AffinidiStrategy(options: ProviderOptionsType) {
 
   const client = new affinidi.Client({
     client_id: options.client_id,
-    client_secret: options.client_secret,
+    ...(options.pkce !== true && { client_secret: options.client_secret }),
     redirect_uris: options.redirect_uris,
     response_types: ['code'],
-    token_endpoint_auth_method: 'client_secret_post',
+    token_endpoint_auth_method: options.pkce === true ? 'none' : 'client_secret_post',
   })
 
   return {
