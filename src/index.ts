@@ -9,7 +9,8 @@ export type ProviderOptionsType = {
   id: string
   issuer: string
   client_id: string
-  client_secret: string
+  client_secret?: string
+  pkce: boolean
   redirect_uris: string[]
   verifyCallback?: any
   expressSesssion?: SessionOptions
@@ -112,12 +113,22 @@ export const affinidiProvider = async (app: any, options: ProviderOptionsType) =
           error: err.message,
           error_description: err.error_description,
         })
-      } else {
-        const profile = (options.profileParser && options.profileParser(user)) || profileParser(user)
-        if (options.onSuccess && typeof options.onSuccess === 'function') {
-          options.onSuccess(user, profile, info)
+      } else if (user) {
+        try {
+          const profile = (options.profileParser && options.profileParser(user)) || profileParser(user)
+          if (options.onSuccess && typeof options.onSuccess === 'function') {
+            options.onSuccess(user, profile, info)
+          }
+          res.send({ user: profile })
+        } catch (error: any) {
+          res.status(500).send({
+            error: error.message,
+          })
         }
-        res.send({ user: profile })
+      } else {
+        res.status(400).send({
+          error: info.message || 'Unknown Bad Request',
+        })
       }
     })(req, res, next)
   }
