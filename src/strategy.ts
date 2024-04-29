@@ -10,7 +10,7 @@ export default async function AffinidiStrategy(options: ProviderOptionsType) {
   }
   if (options.pkce != true && (typeof options.client_secret !== 'string' || !options.client_secret)) {
     throw new TypeError('affinidi client_secret is required when its not PKCE flow')
-}
+  }
 
   //discover the wellknown for issuer
   const affinidi = await Issuer.discover(options.issuer)

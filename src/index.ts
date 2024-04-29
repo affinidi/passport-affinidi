@@ -71,16 +71,16 @@ export const affinidiProvider = async (app: any, options: ProviderOptionsType) =
     //handles serialization and deserialization of authenticated user
     passport.serializeUser(
       options.passport?.serializeUser ||
-      function (user: any, done) {
-        done(null, user)
-      },
+        function (user: any, done) {
+          done(null, user)
+        },
     )
 
     passport.deserializeUser(
       options.passport?.deserializeUser ||
-      function (user: any, done) {
-        done(null, user)
-      },
+        function (user: any, done) {
+          done(null, user)
+        },
     )
   }
 
@@ -128,7 +128,7 @@ export const affinidiProvider = async (app: any, options: ProviderOptionsType) =
       } else {
         res.status(400).send({
           error: info.message || 'Unknown Bad Request',
-        });
+        })
       }
     })(req, res, next)
   }
